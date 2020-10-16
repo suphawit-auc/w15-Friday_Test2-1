@@ -5,7 +5,7 @@ void setup()
 {
   size(800, 600);
   ball=new Ball(width/2, height/2, 50);
-  batleft=new BallBat(20, height/2, 40, 200);
+  batleft=new BallBat(random(0, 500), random(0, 600), 40, 200);
   batright=new BallBat(width-20, height/2, 40, 200);
   ball.ballspeedx=3;
   ball.ballspeedy=random(-2, 2);
@@ -16,6 +16,7 @@ void draw()
   ball.move_ball();
   ball.draw();
   ball.bouce_ball();
+  batleft.draw();
   batright.move_BallBat();
   batright.draw();
   hit_ball();
@@ -63,15 +64,17 @@ class Ball
       this.ballx=width/2;
       this.bally=height/2;
       ball.ballspeedx=3;
-      ball.ballspeedy=random(-2, 2);
+      // ball.ballspeedy=random(-2, 2);
+      ball.ballspeedy=2;
     }
     if (this.ball_left()<0)
     {
       //this.scoreright=this.scoreright+1;
-     // this.ballx=width/2;
+      // this.ballx=width/2;
       //this.bally=height/2;
       ball.ballspeedx=3;
-      ball.ballspeedy=random(-2, 2);
+      // ball.ballspeedy=random(-2, 2);
+      ball.ballspeedy=2;
     }
     if (this.ball_bottom()>height)
     {
@@ -197,19 +200,18 @@ class PongGame
 }
 void hit_ball()
 {
-  if (ball.ball_left()<0&&ball.bally>batleft.bat_top()&&ball.bally<batleft.bat_bottom())
+  if (ball.ball_left()<batleft.bat_right()&&ball.bally>batleft.bat_top()&&ball.bally<batleft.bat_bottom())
   {
     ball.ballspeedx = -ball.ballspeedx;
     if (ball.ballspeedx>0)
     {
-      ball.ballspeedx+=1;
+      //ball.ballspeedx+=1;
     }
     if (ball.ballspeedx<0)
     {
-      ball.ballspeedx-=1;
+      //ball.ballspeedx-=1;
     }
     ball.ballspeedy=map(ball.bally-batleft.baty, -batleft.bat_height/2, batleft.bat_height/2, -10, 10);
-    
   }
 
   if ( ball.ball_right() > batright.bat_left() && ball.bally > batright.bat_top() && ball.bally < batright.bat_bottom())
@@ -217,11 +219,11 @@ void hit_ball()
     ball.ballspeedx = -ball.ballspeedx;
     if (ball.ballspeedx>0)
     {
-      ball.ballspeedx+=1;
+      // ball.ballspeedx+=1;
     }
     if (ball.ballspeedx<0)
     {
-      ball.ballspeedx-=1;
+      //ball.ballspeedx-=1;
     }
     ball.ballspeedy = map(ball.bally -batright.baty, -batright.bat_height/2, batright.bat_height/2, -10, 10);
   }
